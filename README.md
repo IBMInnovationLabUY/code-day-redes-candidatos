@@ -4,7 +4,7 @@ En este Hands-on vamos a estar usando las capacidades de Watson para analizar **
 
 ### Introduccion:
 
-Que haremos?
+<!-- Que haremos?
 Procesamiento de Lenguaje Natural.
 Clasificacion de texto.
 
@@ -27,7 +27,7 @@ Watson.
     Luego, en el panel izquierdo, ingresamos a Manage y le damos click a Iniciar Watson Studio
  - Watson Assistant
 
- - Natural Language Understanding
+ - Natural Language Understanding -->
 
 ### Pre-Requisitos:
 Antes de comenzar con el Hands-On asegurate de cumplir con todos los requisitos:
@@ -71,7 +71,7 @@ Estando en la terminal nos movemos hacia el directorio donde tenemos nuestro pro
 #### 2. [Obtener Los Tweets]()
 Para obtener los Tweets se usa la [API de Twitter](https://developers.twitter.com).
 En este hands-on no haremos la extraccion de Tweets ya que para tener acceso a la API se precisa una autorizacion por parte de Twitter que demora unas horas.
-De todas maneras, al final de este paso-a-paso queda un [Anexo](#6.-anexo:-extraccion-de-tweets-usando-la-api-de-twitter) donde se explica como realizar una extraccion de tweets.
+De todas maneras, al final de este paso-a-paso queda un [Anexo](#7.-anexo:-extraccion-de-tweets-usando-la-api-de-twitter) donde se explica como realizar una extraccion de tweets.
 
 #### 3. [Generar conjunto de entrenamiento y testeo]()
 Luego de haber hecho la extraccion de tweets y obtener nuestro set de datos, precisamos obtener un conjunto de estos para entrenar y luego otro para el testeo. En un problema clasico de Machine Learning, usariamos el 80% de nuestros Tweets para el entrenamiento y luego el 20% para realizar las pruebas.
@@ -424,3 +424,31 @@ Los que tienen una conexión son de entrada o salida y los que tienen dos conexi
   - **6.2.9** Presionar la pestaña al lado del nodo `inject` para ejecutar nuestro flujo. En el panel de la derecha presionaremos el logo de `debug` (con forma de araña) para poder ver la salida de nuestro flujo.
 
     ![](images/41-results.png)
+
+#### 7. [Anexo: Extraccion de Tweets Usando la Api de Twitter]()
+
+Pasos para extaer Tweets Usando la API de Twitter.
+
+ - **7.1**
+  Crear una cuenta en [La pagina para desarrolladores de Twitter](https://developer.twitter.com/)
+ - **7.2**
+  Una vez que nos hayamos creado una cuenta y hayamos iniciado sesion debemos crear una [App de Twitter](https://developer.twitter.com/en/apps)
+ - **7.3**
+  El equipo de Twitter debe aprobar la creación de nuestra App. Nos llegara un mail con algunas consultas sobre el uso de la API de Twitter y una vez que nos hayan aprobado la App estaremos listos para usar la API.
+- **7.4**
+  Luego de ser aprobados debemos crear un [ambiente de ejecucion](https://developer.twitter.com/en/account/environments). Twitter en el plan Free nos ofrece realizar 250 requests con un maximo de 100 tweets en un archivo de 30 dias o 50 requests con un maximo de 100 tweets en todo el archivo de twitter.
+  Debemos crear el ambiente que queremos.
+   - Si elegimos usar el archivo de los ultimos 30 dias debemos copiar esta url y pegarla en nuestro `.env`:
+    ``` URL_TWITTER_30_DAY = https://api.twitter.com/1.1/tweets/search/30day/<nombre-ambiente>.json ```
+   - Si elegimos usar todo el archivo de twitter debemos copiar esta url y pegarla en nuestro `.env`
+    ``` URL_TWITTER_FULL_ARCHIVE = https://api.twitter.com/1.1/tweets/search/fullarchive/<nombre-ambiente>.json ```
+ - **7.5**
+  Luego de haber creado los ambientes, debemos ir a los detalles de nuestra App y en la pestaña de `Keys and tokens`copiar en el .env:
+    - La API Key
+    - La API Secret Key
+  - **7.5**
+    Luego ejecutamos en la terminal:
+    ``` node getTweets.js ```
+    y comenzaremos a extraer los tweets del mes de Julio que mencionen a los candidatos `Talvi`, `Lacalle Pou` o `Daniel Martinez`.
+
+
