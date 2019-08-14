@@ -49,18 +49,18 @@ async function classify(candidato) {
     .map(e => e.trim())
     .map(e => e.split(',').map(e => e.trim()));
   try {
-    tweetPos = Math.floor(Math.random() * data.length)
+    tweetPos = Math.floor(Math.random() * data.length-1)
     let output = await analyze(data[tweetPos][0])
     sentiment = JSON.stringify(output.sentiment, null, 2) + '\n'
     keywords = JSON.stringify(output.keywords, null, 2) + '\n'
     entities = JSON.stringify(output.entities, null, 2) + '\n'
     console.log('Tweet: ' + data[tweetPos])
     console.log()
-    console.log('Intencion: ' + sentiment)
+    console.log('Sentimiento: ' + sentiment)
     console.log()
-    console.log('Intencion: ' + keywords)
+    console.log('Keywords: ' + keywords)
     console.log()
-    console.log('Intencion: ' + entities)
+    console.log('Entidades: ' + entities)
     console.log()
   } catch (e) {
     console.log(e)

@@ -41,11 +41,11 @@ async function classify(candidato) {
     .map(e => e.split('\n').map(e => e.trim()));
   try {
     let { session_id } = await createSession()
-    tweetPos = Math.floor(Math.random() * data.length)
+    tweetPos = Math.floor(Math.random() * data.length-1)
     let { output } = await sendMessage(session_id, data[tweetPos][0])
     let { intent } = output.intents[0]
+    console.log('Archivo: ' + candidato)
     console.log('Tweet: ' + data[tweetPos])
-    console.log()
     console.log('Intencion: ' + intent)
     console.log()
   } catch (e) {

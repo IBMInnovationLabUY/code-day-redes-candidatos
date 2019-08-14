@@ -2,33 +2,6 @@
 
 En este Hands-on vamos a estar usando las capacidades de Watson para analizar **6.000** tweets del mes de Julio donde se haya mencionado a **Daniel Martinez**, **Luis Lacalle Pou** o **Ernesto Talvi**, tres de los candidatos presidenciales para las Elecciones de Octubre de Uruguay.
 
-### Introduccion:
-
-<!-- Que haremos?
-Procesamiento de Lenguaje Natural.
-Clasificacion de texto.
-
-Usaremos tres servicios:
-Watson.
- - Natural Language Classifier:
-    IBM Watson™ Natural Language Classifier puede ayudar a su aplicación a entender el lenguaje de textos cortos y a hacer predicciones sobre cómo manejarlos. Un clasificador aprende de sus datos de ejemplo y puede devolver información sobre textos sobre los que no está entrenado. Puede crear y entrenar este clasificador en menos de 15 minutos.
-
-    Una vez creado el servicio, en panel izquierdo ingresamos a Credenciales de servicio y copiamos las credenciales.
-    ```
-    {
-      "apikey": "BVXhIyHoEtdUSjNPpZSWcXEvg6jjMNnieYVY3DeL8Z80",
-      "iam_apikey_description": "Auto-generated for key c8f8fc59-d722-468b-89f5-2cf29746fbd1",
-      "iam_apikey_name": "Auto-generated service credentials",
-      "iam_role_crn": "crn:v1:bluemix:public:iam::::serviceRole:Manager",
-      "iam_serviceid_crn": "crn:v1:bluemix:public:iam-identity::a/6e78166e125a4400b022b3b2fda9b4e0::serviceid:ServiceId-7d67296d-d456-4618-93c0-e45bee6b4948",
-      "url": "https://gateway.watsonplatform.net/natural-language-classifier/api"
-    }
-    ```
-    Luego, en el panel izquierdo, ingresamos a Manage y le damos click a Iniciar Watson Studio
- - Watson Assistant
-
- - Natural Language Understanding -->
-
 ### Pre-Requisitos:
 Antes de comenzar con el Hands-On asegurate de cumplir con todos los requisitos:
 1. [Node.JS v10.9.0 or higher](https://nodejs.org/en/)
@@ -59,11 +32,11 @@ v10.16.0
 
 Si tenemos git instalado: abriremos una terminal, nos movemos a un directorio deseado y ejecutamos:
 ```bash
-git clone
+git clone https://github.com/IBMInnovationLabUY/code-day-redes-candidatos.git
 ```
 En caso de no tener git instalado, descargaremos esta carpeta como un ZIP y la descomprimos en un directorio deseado.
 
-Estando en la terminal nos movemos hacia el directorio donde tenemos nuestro proyecto y ejecutamos
+Estando en la terminal nos movemos hacia el directorio donde clonamos/descargamos nuestro proyecto y ejecutamos
 ```bash
   npm install
 ```
@@ -78,7 +51,7 @@ Luego de haber hecho la extraccion de tweets y obtener nuestro set de datos, pre
 
 La gran ventaja de usar Watson es que no precisamos un conjunto tan grande de entrenamiento. Por supuesto, cuanto mas ejemplos tengamos para el entrenamiento mejor van a ser los resultados (aunque esta tarea hay que realizarla con cuidado, a veces a Watson lo entrenamos quitandole ejemplos).
 
-Notaremos que en nuestro proyecto tenemos una carpeta `trainTweets` y otra `testTweets`. Dentro de cada una de estas, tenemos un archivo `.csv` para cada candidato.
+Notaremos que en nuestro proyecto tenemos una carpeta `trainTweets` y otra `testTweets`. En la carpeta `trainTweets` tenemos un archivo `intentsCandidatosCodeDay.csv` que tiene un conjunto de ejemplos para cuando entrenemos a Watson. Dentro de la carpeta `testTweets` tenemos un archivo `.csv` para cada candidato con ejemplos para luego testear nuestros modelos.
 
 #### 4. [Entrenamiento de Watson Assistant]()
 
@@ -114,7 +87,7 @@ El primer servicio de Watson que usaremos para la clasificación de Tweets será
 
   - **4.1.7** Iniciamos el servicio de Watson Assistant.
 
-    ![](images/6.1-iniciarServicioWa.png)
+    ![](images/5.1-iniciarServicioWa.png)
 
   - **4.1.8** Una vez que se haya iniciado el servicio estaremos frente My First Assistant (Mi primer Asistente). Como este servicio se usa para desarrollar chatbots principalmente y este no va a ser nuestro caso, la parte de assistants no la precisaremos.
     En el panel superior en la esquina izquierda, ingresaremos a la parte de _Skills_.
@@ -181,7 +154,7 @@ El primer servicio de Watson que usaremos para la clasificación de Tweets será
 
     ![](images/16-bothIntentsReady.png)
 
-    Una vez que clickeamos en `Try Out` se nos abrirá un chat en la parte derecha. Como este servicio está pensado para el desarrollo de chatbots, la parte de testeo es un chat. Una vez abierto esto veremos que en la parte superior hay un cartel avisando que Watson está entrenando.
+    Una vez que clickeamos en `Try It` se nos abrirá un chat en la parte derecha. Como este servicio está pensado para el desarrollo de chatbots, la parte de testeo es un chat. Una vez abierto esto veremos que en la parte superior hay un cartel avisando que Watson está entrenando.
 
     ![](images/17-watsonIsTraining.png)
 
@@ -230,8 +203,7 @@ El primer servicio de Watson que usaremos para la clasificación de Tweets será
     > 6. Critica_LP: Tweets que muestran un rechazo a Luis Lacalle Pou y/o al Partido Nacional
     > 6. Critica_T: Tweets que muestran un rechazo a Ernesto Talvio y/o al Partido Colorado
 
-    En los tweets que tenían que ver con Daniel Martinez se leia con frecuencia criticas a su gestion como intendente y criticas por la designacion de su Vicepresidente, por eso se crearon las intenciones
-    > 7. Critica_DM_Intendencia
+    En los tweets que tenían que ver con Daniel Martinez habían varios que se concentraban en la designacion de su Vicepresidente, por eso se crearon las intenciones
     > 8. Critica_DM_Formula
     > 9. Apoyo_DM_Formula
 
@@ -239,9 +211,7 @@ El primer servicio de Watson que usaremos para la clasificación de Tweets será
     > 10. Critica_LP_Trabajo: Haciendo alusion a que nunca trabajó en otro lugar que no fuese el Parlamento
     > 11. Critica_LP_Renuncia: Tweets haciendo referencia a que no ha presentado renuncia al Parlamento a pesar de hacer Campaña.
 
-    En el caso de Talvi, la decision de la formula fue un tema que dió que hablar, el no incluir a Pedro Bordaberry fue otro.
-    > 12. Apoyo_T_Formula
-    > 13. Critica_T_Bordaberry
+    En el caso de Talvi, los tweets eran muy variados. No hubo una categoría que marcara tendencia si hubieron varios temas que tomaron algun protagonismo pero el volumen de estos temas no era tan grande como para crear una cateogoria especial.
 
     Luego de importar todas las intenciones deberiamos ver algo similar a esto:
 
@@ -251,7 +221,7 @@ El primer servicio de Watson que usaremos para la clasificación de Tweets será
 
   - **4.1.15** Pruebas.
 
-      Para probar podemos ingresar ejemplos mediante el panel de `Try Out` o usando la Api de Watson Assistant.
+      Para probar podemos ingresar ejemplos mediante el panel de `Try It` o usando la Api de Watson Assistant.
 
       En el proyecto que clonamos veremos que tenemos un archivo `.envEXAMPLE` que tiene lo siguiente:
       ```
@@ -277,7 +247,7 @@ El primer servicio de Watson que usaremos para la clasificación de Tweets será
 
       Una vez que tenemos nuestro archivo `.env` con los cuatro campos completos estaremos listos para hacer pruebas a nuestro modelo de Watson via API.
 
-      En nuestro proyecto iremos al archivo `twitterAssistant.js`
+      En nuestro proyecto iremos al archivo `twitterAssistantRandom.js`
 
       Este codigo lo que hace es tomar un tweet random de cada archivo referente a los candidatos en la carpeta `/testTweets` e imprimira el resultado en la consola.
 
@@ -286,6 +256,8 @@ El primer servicio de Watson que usaremos para la clasificación de Tweets será
       ```bash
         node twitterAssistant.js
       ```
+
+      Ademas, podemos ejecutar el archivo `twitterAssistantAll.js` que lo que hace es obtener la intencion de cada tweet que esta en la carpeta `/testTweets` y guardar los resultados en la carpeta `/results`
 
 #### 5. [Clasificacion de Tweets usando Watson Natural Language Understanding]()
 
